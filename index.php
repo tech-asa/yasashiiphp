@@ -8,7 +8,7 @@
 </head>
 <body>
        入力フォーム<br>
-       <form action="receive.php" method="POST">
+       <form action="add.php" method="POST">
             料理名：<input type="text" name="recipe_name" required>
             カテゴリ：
             <select name="category" id="">
