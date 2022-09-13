@@ -5,8 +5,8 @@
         echo "IDを正しく入力してください";
         exit;
     }
+    $id = (int)$_GET["id"];
     try {
-        $id = (int)$_GET["id"];
         $dbh = new PDO("mysql:host = localhost; dbname=db1; charset=utf8", $user, $pass);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "SELECT * FROM recipes WHERE id = ?";
