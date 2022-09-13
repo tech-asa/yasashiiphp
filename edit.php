@@ -1,7 +1,6 @@
 <?php
-$user = "mysql";
-$pass = "mysql";
-if (empty($_GET["id"])) {
+    require_once __DIR__ . "/../../db_config.php";
+    if (empty($_GET["id"])) {
     echo "IDを正しく入力してください";
     exit;
 }
@@ -15,6 +14,14 @@ try {
     $stml->execute();
     $result = $stml->fetch(PDO::FETCH_ASSOC);
     $dbh = null;
+    $difficulty = "";
+    if (htmlspecialchars($result["difficulty"], ENT_QUOTES) == "1") {
+        $difficulty = "簡単";
+    } elseif (htmlspecialchars($result["difficulty"], ENT_QUOTES) == "2") {
+        $difficulty = "普通";
+    } elseif (htmlspecialchars($result["difficulty"], ENT_QUOTES) == "3") {
+        $difficulty = "難しい";
+    }
     echo "<br><a href='index.php'>トップページに戻る</a>";
 } catch (PDOException $e) {
     echo "エラー発生：" . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "<br>";

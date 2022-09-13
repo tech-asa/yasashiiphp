@@ -10,7 +10,7 @@
 
 <body>
     <h1>レシピの一覧</h1>
-    <a href="garbage.php">レシピの新規登録</a>
+    <a href="form.php">レシピの新規登録</a>
 </body>
 
 </html>
@@ -18,8 +18,7 @@
 <?php
 
 try {
-    $user = "mysql";
-    $pass = "mysql";
+    require_once __DIR__ . "/../../db_config.php";
 
     $dbh = new PDO("mysql:host = localhost; dbname=db1; charset=utf8", $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -32,10 +31,18 @@ try {
     <th>料理名</th><th>予算</th><th>難易度</th>" . PHP_EOL;
     echo "</tr>" . PHP_EOL;
     foreach ($result as $row) {
+        $difficulty = "";
+        if (htmlspecialchars($row["difficulty"], ENT_QUOTES) == "1") {
+            $difficulty = "簡単";
+        } elseif (htmlspecialchars($row["difficulty"], ENT_QUOTES) == "2") {
+            $difficulty = "普通";
+        } elseif (htmlspecialchars($row["difficulty"], ENT_QUOTES) == "3") {
+            $difficulty = "難しい";
+        }
         echo "<tr>" . PHP_EOL;
         echo "<td>" . htmlspecialchars($row["recipe_name"], ENT_QUOTES) . "</td>" . PHP_EOL;
         echo "<td>" . htmlspecialchars($row["budget"], ENT_QUOTES) . "</td>" . PHP_EOL;
-        echo "<td>" . htmlspecialchars($row["difficulty"], ENT_QUOTES) . "</td>" . PHP_EOL;
+        echo "<td>" . $difficulty . "</td>" . PHP_EOL;
         echo "<td>" . PHP_EOL;
         echo '<a href="detail.php?id=' . htmlspecialchars($row["id"], ENT_QUOTES).'">詳細</a>' . PHP_EOL;
         echo '<a href="edit.php?id=' . htmlspecialchars($row["id"], ENT_QUOTES).'">編集</a>' . PHP_EOL;
