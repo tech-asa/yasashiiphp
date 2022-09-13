@@ -26,6 +26,7 @@
         $stml->execute();
         $dbh = null;
         echo "レシピの更新が完了しました。";
+        echo "<br><a href='index.php'>トップページに戻る</a>";
     } catch (PDOException $e) {
         echo "エラー発生：" . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "<br>";
         exit;

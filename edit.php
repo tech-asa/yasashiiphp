@@ -15,6 +15,7 @@ try {
     $stml->execute();
     $result = $stml->fetch(PDO::FETCH_ASSOC);
     $dbh = null;
+    echo "<br><a href='index.php'>トップページに戻る</a>";
 } catch (PDOException $e) {
     echo "エラー発生：" . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "<br>";
     exit;
@@ -57,6 +58,7 @@ try {
         <br>
         <input type="submit" name="" id="" value="送信">
     </form>
+    
 </body>
 
 </html>

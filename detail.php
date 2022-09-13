@@ -19,6 +19,7 @@
         echo "予算" . htmlspecialchars($result["budget"],ENT_QUOTES) . "<br>" . PHP_EOL;
         echo "難易度" . htmlspecialchars($result["difficulty"],ENT_QUOTES) . "<br>" . PHP_EOL;
         echo "作り方:<br>" . nl2br(htmlspecialchars($result["howto"],ENT_QUOTES)) . "<br>" . PHP_EOL;
+        echo "<br><a href='index.php'>トップページに戻る</a>";
         $dbh = null;
     } catch (PDOException $e) {
         echo "エラー発生：". htmlspecialchars($e->getMessage(), ENT_QUOTES)."<br>";
