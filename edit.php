@@ -33,7 +33,7 @@ try {
 <body>
     レシピの投稿<br>
     <form action="update.php?id=
-    <?php htmlspecialchars($result["id"], ENT_QUOTES) ?>" method="post">
+    <?= htmlspecialchars($result["id"], ENT_QUOTES) ?>" method="post">
         料理名：<input type="text" name="recipe_name" value="<?= htmlspecialchars($result["recipe_name"], ENT_QUOTES) ?>">
         <br>
         カテゴリ：
