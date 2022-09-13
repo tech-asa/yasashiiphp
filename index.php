@@ -1,35 +1,52 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>入力フォーム</title>
+    <title>レシピ一覧</title>
 </head>
+
 <body>
-       入力フォーム<br>
-       <form action="add.php" method="POST">
-            料理名：<input type="text" name="recipe_name" required>
-            カテゴリ：
-            <select name="category" id="">
-                <option hidden>選択してください</option>
-                <option value="1">和食</option>
-                <option value="2">中華</option>
-                <option value="3">洋食</option>
-            </select>
-            <br>
-            難易度：
-            <input type="radio" name="difficulty" value="1">簡単
-            <input type="radio" name="difficulty" value="2" checked>普通
-            <input type="radio" name="difficulty" value="3">難しい
-            <br>
-            予算：
-            <input type="number" min="1" max="9999" name="budget">円
-            <br>
-            作り方：
-            <textarea name="howto" id="" cols="40" rows="4" maxlength="320"></textarea>
-            <br>
-            <input type="submit" name="" id="" value="送信">
-       </form>
+    <h1>レシピの一覧</h1>
+    <a href="form.php">レシピの新規登録</a>
 </body>
+
 </html>
+
+<?php
+
+try {
+    $user = "mysql";
+    $pass = "mysql";
+
+    $dbh = new PDO("mysql:host = localhost; dbname=db1; charset=utf8", $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "SELECT * FROM recipes";
+    $stmt = $dbh->query($sql);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo "<table>" . PHP_EOL;
+    echo "<tr>" . PHP_EOL;
+    echo "
+    <th>料理名</th><th>予算</th><th>難易度</th>" . PHP_EOL;
+    echo "</tr>" . PHP_EOL;
+    foreach ($result as $row) {
+        echo "<tr>" . PHP_EOL;
+        echo "<td>" . htmlspecialchars($row["recipe_name"], ENT_QUOTES) . "</td>" . PHP_EOL;
+        echo "<td>" . htmlspecialchars($row["budget"], ENT_QUOTES) . "</td>" . PHP_EOL;
+        echo "<td>" . htmlspecialchars($row["difficulty"], ENT_QUOTES) . "</td>" . PHP_EOL;
+        echo "<td>" . PHP_EOL;
+        echo '<a href="detail.php?id=' . htmlspecialchars($row["id"], ENT_QUOTES).'">詳細</a>' . PHP_EOL;
+        echo '<a href="edit.php?id=' . htmlspecialchars($row["id"], ENT_QUOTES).'">編集</a>' . PHP_EOL;
+        echo '<a href="delete.php?id=' . htmlspecialchars($row["id"], ENT_QUOTES).'">削除</a>' . PHP_EOL;
+        echo "</td>" . PHP_EOL;
+        echo "</tr>" . PHP_EOL;
+    }
+    echo "</table>" . PHP_EOL;
+    $dbh = null;
+} catch (PDOException $e) {
+    echo "エラー発生：" . htmlspecialchars($e->getMessage(), ENT_QUOTES) . "<br>";
+    exit;
+}
+?>
